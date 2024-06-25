@@ -20,7 +20,7 @@ function Purge-Files {
     }
 
     # Run the robocopy command
-    robocopy "c:\empty" $Folder /purge /w:1 /r:1
+    robocopy "c:\empty" $Folder /purge /w:1 /r:1 /nfl
 
     # Check if the folder is empty and delete it if it is
     if (Is-FolderEmpty -Folder $Folder) {
