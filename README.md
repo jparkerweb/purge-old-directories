@@ -1,6 +1,6 @@
 # PowerShell for Purging Old Directories
 
-These two PowerShell scripts were designed to help manage and clean up directories by purging old files and directories.
+These two PowerShell scripts were designed to help manage and clean up by purging old directories.
 
 ## purge-files-in-folder.ps1
 
