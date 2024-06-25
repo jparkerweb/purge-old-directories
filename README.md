@@ -11,7 +11,7 @@ These two PowerShell scripts were designed to help manage and clean up by purgin
 ### Usage
 
 ```powershell
-.\purge-files-in-folder.ps1 -FolderPath <path> [-q] [-Force]
+.\purge-files-in-folder.ps1 -FolderPath <path> [-Force]
 ```
 
 ### Parameters
