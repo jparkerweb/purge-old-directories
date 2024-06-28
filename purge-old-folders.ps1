@@ -73,8 +73,11 @@ if (-not $Force) {
 # Get all directories older than the specified number of months
 $oldDirectories = Get-OldDirectories -Path $TargetPath -Months $MonthsOld
 
+# Shuffle the directories
+$shuffledDirectories = $oldDirectories | Get-Random -Count $oldDirectories.Count
+
 # Process each old directory
-foreach ($dir in $oldDirectories) {
+foreach ($dir in $shuffledDirectories) {
     Write-Host "Processing directory: $($dir.FullName)"
     .\purge-files-in-folder.ps1 -FolderPath $dir.FullName -Force
 }
