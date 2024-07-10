@@ -14,7 +14,17 @@ function Get-OldDirectories {
     )
     
     $thresholdDate = (Get-Date).AddMonths(-$Months)
-    Get-ChildItem -Path $Path -Directory | Where-Object { $_.LastWriteTime -lt $thresholdDate }
+    Write-Host "Threshold date for filtering directories: $thresholdDate"
+
+    Get-ChildItem -Path $Path -Directory | ForEach-Object {
+        Write-Host "Checking directory: $($_.FullName), LastWriteTime: $($_.LastWriteTime)"
+        if ($_.LastWriteTime -lt $thresholdDate) {
+            Write-Host "Directory $($_.FullName) is older than $Months months."
+            $_
+        } else {
+            Write-Host "Directory $($_.FullName) is not older than $Months months."
+        }
+    }
 }
 
 # Function to show usage instructions
@@ -73,7 +83,7 @@ if (-not $Force) {
 # Get all directories older than the specified number of months
 $oldDirectories = Get-OldDirectories -Path $TargetPath -Months $MonthsOld
 $numDirectories = $oldDirectories.Count
-if ($numDirectories > 0) {
+if ($numDirectories -gt 0) {
     # Shuffle the directories
     $shuffledDirectories = $oldDirectories | Get-Random -Count $oldDirectories.Count
     Write-Host $shuffledDirectories
@@ -83,6 +93,8 @@ if ($numDirectories > 0) {
         Write-Host "Processing directory: $($dir.FullName)"
         .\purge-files-in-folder.ps1 -FolderPath $dir.FullName -Force
     }
+} else {
+    Write-Host "No directories older than $MonthsOld months were found."
 }
 
 Write-Host "Completed processing of old directories."
